@@ -8,8 +8,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Baixar arquivos
+      - name: Baixar projeto
         uses: actions/checkout@v4
+
+      - name: Extrair Natsuki
+        run: |
+          unzip -o Natsuki_Mobile_Build.zip -d natsuki
+          cp -r natsuki/. ./
+          rm -rf natsuki
 
       - name: Configurar Java
         uses: actions/setup-java@v4
@@ -17,18 +23,18 @@ jobs:
           distribution: temurin
           java-version: "17"
 
-      - name: Configurar Android
+      - name: Configurar Android SDK
         uses: android-actions/setup-android@v3
 
       - name: Configurar Gradle
-        uses: gradle/actions/setup-gradle@v6
+        uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: "8.7"
 
-      - name: Compilar Natsuki
+      - name: Compilar APK
         run: gradle assembleDebug
 
-      - name: Entregar APK
+      - name: Disponibilizar APK
         uses: actions/upload-artifact@v4
         with:
           name: Natsuki-APK
