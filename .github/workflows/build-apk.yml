@@ -1,0 +1,35 @@
+name: Natsuki Mobile Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar arquivos
+        uses: actions/checkout@v4
+
+      - name: Configurar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Configurar Android
+        uses: android-actions/setup-android@v3
+
+      - name: Configurar Gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          gradle-version: "8.7"
+
+      - name: Compilar Natsuki
+        run: gradle assembleDebug
+
+      - name: Entregar APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Natsuki-APK
+          path: app/build/outputs/apk/debug/*.apk
