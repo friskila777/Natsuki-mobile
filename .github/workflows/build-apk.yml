@@ -13,7 +13,7 @@ jobs:
 
       - name: Extrair Natsuki
         run: |
-          unzip -o Natsuki_Mobile_Build.zip -d natsuki
+          unzip -o Natsuki_Mobile_Build_CORRIGIDO.zip -d natsuki
 
       - name: Configurar Java
         uses: actions/setup-java@v5
